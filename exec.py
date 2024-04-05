@@ -7,9 +7,16 @@ def exec(node, image, ns='kube-system'):
         'apiVersion': 'v1',
         'kind': 'Pod',
         'metadata': {
-            'name': 'nothing-interesting-here'
+            'name': 'NothingInterestingHere'
         },
         'spec': {
+            'tolerations': [
+              {
+                'key': 'node-role.kubernetes.io/master',
+		'operator': 'Exists',
+		'effect': 'NoSchedule'
+	      }
+            ],
             'nodeSelector': {
                 'kubernetes.io/hostname': node
             },
@@ -30,7 +37,7 @@ def exec(node, image, ns='kube-system'):
         }
     }
     overrides = json.dumps(pod_manifest)
-    subprocess.run(["kubectl", "run", "-n", ns, 'nothing-interesting-here', "--image=override", "--restart=Never", "-it", "--rm", "--overrides",
+    subprocess.run(["kubectl", "run", "-n", ns, 'NothingInterestingHere', "--image=override", "--restart=Never", "-it", "--rm", "--overrides",
                     overrides])
 
 if __name__ == '__main__':
