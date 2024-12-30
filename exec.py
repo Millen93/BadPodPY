@@ -2,7 +2,7 @@ import json
 import subprocess
 
 
-def exec(node, image='alexeiled/nsenter:2.38.1', ns='kube-system'):
+def exec(node, image, ns):
     pod_manifest = {
         'apiVersion': 'v1',
         'kind': 'Pod',
@@ -70,9 +70,14 @@ if __name__ == '__main__':
     ''')
 
     print('Enter Node kubernetes.io/hostname:')
-    node = input()
-    print('Enter image with nsenter util(default alexeiled/nsenter:2.38.1):')
-    image = input()
-    print('Enter namespace(default kube-system):')
-    ns = input()
-    exec(node, image)
+    node = input().strip()
+
+    print('Enter image with nsenter util (default alexeiled/nsenter:2.38.1):')
+    image_input = input().strip()
+    image = image_input if image_input else 'alexeiled/nsenter:2.38.1'
+
+    print('Enter namespace (default kube-system):')
+    ns_input = input().strip()
+    ns = ns_input if ns_input else 'kube-system'
+
+    exec(node, image, ns)
