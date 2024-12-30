@@ -2,12 +2,12 @@ import json
 import subprocess
 
 
-def exec(node, image, ns='kube-system'):
+def exec(node, image='alexeiled/nsenter:2.38.1', ns='kube-system'):
     pod_manifest = {
         'apiVersion': 'v1',
         'kind': 'Pod',
         'metadata': {
-            'name': 'NothingInterestingHere'
+            'name': 'nothing-interesting-here'
         },
         'spec': {
             'tolerations': [
@@ -37,7 +37,7 @@ def exec(node, image, ns='kube-system'):
         }
     }
     overrides = json.dumps(pod_manifest)
-    subprocess.run(["kubectl", "run", "-n", ns, 'NothingInterestingHere', "--image=override", "--restart=Never", "-it", "--rm", "--overrides",
+    subprocess.run(["kubectl", "run", "-n", ns, 'nothing-interesting-here', "--image=override", "--restart=Never", "-it", "--rm", "--overrides",
                     overrides])
 
 if __name__ == '__main__':
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     print('Enter Node kubernetes.io/hostname:')
     node = input()
-    print('Enter image with nsenter util:')
+    print('Enter image with nsenter util(default alexeiled/nsenter:2.38.1):')
     image = input()
     print('Enter namespace(default kube-system):')
     ns = input()
