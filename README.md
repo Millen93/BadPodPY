@@ -1,5 +1,7 @@
 # Testing vulnerable cluster
 
+Recommend to use alredy builded image alexeiled/nsenter:2.38.1
+
 #### Educational purposes only
 
 By this code u're creating simple pod that enteres to node namespace
